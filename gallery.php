@@ -23,3 +23,45 @@
         <?php endforeach; ?>
       </div>
     </section>
+
+//ACF flickety slider
+
+<section class="lodges-slider">
+      <?php $images = get_field('slides'); ?>
+      <?php foreach($images as $image): ?>
+        <div class="lodges-slide">
+          <div class="lodges-slide-img">
+            <img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>">
+          </div>
+        </div>
+      <?php endforeach; ?>
+      <button class="slider-arrow slider-arrow-prev"></button>
+      <button class="slider-arrow slider-arrow-next"></button>
+    </section>
+
+//JS for slider
+
+(() => {
+  if(document.querySelector('.lodges-slider')) {
+    const slider = $('.lodges-slider');
+    const flkty = slider.flickity({
+      cellAlign: 'left',
+      cellSelector: '.lodges-slide',
+      autoPlay: 5000,
+      pauseAutoPlayOnHover: true,
+      wrapAround: true,
+      fade: true,
+      setGallerySize: true,
+      pageDots: false,
+      prevNextButtons: false,
+    }).data('flickity');
+
+    slider.find('.slider-arrow-prev').on('click', () => {
+      flkty.previous();
+    });
+
+    slider.find('.slider-arrow-next').on('click', () => {
+      flkty.next();
+    });
+  }
+})();
